@@ -10,13 +10,17 @@ jobs:
   armbian-images:
     runs-on: ubuntu-22.04-arm  # Use a GitHub-hosted runner
     steps:
+      # Checkout this repository
       - name: Checkout repository
         uses: actions/checkout@v3
 
-      - name: Clone Armbian Build Repository
-        run: |
-          git clone --branch "${{ github.ref_name }}" --depth 1 https://github.com/armbian/build armbian-build
-        working-directory: $GITHUB_WORKSPACE
+      # Checkout the Armbian build repository
+      - name: Checkout Armbian Build Repository
+        uses: actions/checkout@v3
+        with:
+          repository: armbian/build
+          ref: main  # Use the main branch of the Armbian repository
+          path: armbian-build  # Check out the Armbian repository to this subdirectory
 
       - name: Copy Userpatches
         run: |
