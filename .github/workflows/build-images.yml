@@ -1,0 +1,41 @@
+name: Build Images
+
+on:
+  push:
+    branches:
+      - main  # Trigger on any push to the main branch
+  workflow_dispatch:  # Allow manual triggers
+
+jobs:
+  armbian-images:
+    runs-on: ubuntu-22.04-arm  # Use a GitHub-hosted runner
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Clone Armbian Build Repository
+        run: |
+          git clone --branch "${{ github.ref_name }}" --depth 1 https://github.com/armbian/build armbian-build
+        working-directory: $GITHUB_WORKSPACE
+
+      - name: Copy Userpatches
+        run: |
+          cp -r 2025/realsense/customize-image.sh armbian-build/userpatches/
+        working-directory: $GITHUB_WORKSPACE
+
+      - name: Build Armbian Image
+        run: |
+          cd armbian-build
+          ./compile.sh BOARD=orangepi5 BRANCH=current RELEASE=jammy BUILD_MINIMAL=yes BUILD_DESKTOP=no KERNEL_ONLY=no COMPRESS_OUTPUTIMAGE=sha,gz
+
+      - name: Archive Build Artifacts
+        run: |
+          mkdir -p $GITHUB_WORKSPACE/artifacts
+          cp armbian-build/output/images/*.img.gz $GITHUB_WORKSPACE/artifacts/
+        working-directory: $GITHUB_WORKSPACE
+
+      - name: Upload Build Artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          name: armbian-images
+          path: $GITHUB_WORKSPACE/artifacts
