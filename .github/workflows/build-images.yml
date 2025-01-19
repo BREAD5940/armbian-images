@@ -30,7 +30,7 @@ jobs:
 
       - name: Build Armbian Image
         run: |
-          ./compile.sh BOARD=orangepi5 BRANCH=current RELEASE=jammy BUILD_MINIMAL=yes BUILD_DESKTOP=no KERNEL_ONLY=no COMPRESS_OUTPUTIMAGE=sha,gz
+          ./compile.sh build BOARD=orangepi5 BRANCH=vendor BUILD_DESKTOP=no BUILD_MINIMAL=no KERNEL_CONFIGURE=no RELEASE=jammy COMPRESS_OUTPUTIMAGE=sha,gz
         working-directory: ${{ github.workspace }}/armbian-build
 
       - name: Archive Build Artifacts
