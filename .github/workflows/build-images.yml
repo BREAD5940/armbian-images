@@ -24,6 +24,7 @@ jobs:
 
       - name: Copy Userpatches
         run: |
+          mkdir -p armbian-build/userpatches
           cp -r 2025/realsense/customize-image.sh armbian-build/userpatches/
         working-directory: ${{ github.workspace }}
 
