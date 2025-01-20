@@ -32,12 +32,14 @@ jobs:
         run: |
           ./compile.sh build BOARD=rock-5c BRANCH=vendor BUILD_DESKTOP=no BUILD_MINIMAL=no KERNEL_CONFIGURE=no RELEASE=jammy COMPRESS_OUTPUTIMAGE=sha,gz
         working-directory: ${{ github.workspace }}/armbian-build
-
-      - name: Archive Build Artifacts
+      
+      - name: Compress and Archive Output Image
         run: |
-          mkdir -p  ${{ github.workspace }}/artifacts
-          cp armbian-build/output/images/*.img.gz ${{ github.workspace }}/artifacts/
-        working-directory:  ${{ github.workspace }}
+          mkdir -p ${{ github.workspace }}/artifacts
+          for img in ${{ github.workspace }}/armbian-build/output/images/*.img; do
+            gzip -c "$img" > "${img}.gz"
+            mv "${img}.gz" ${{ github.workspace }}/artifacts/
+          done
 
       - name: Upload Build Artifacts
         uses: actions/upload-artifact@v3
