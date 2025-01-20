@@ -8,7 +8,7 @@ on:
 
 jobs:
   armbian-images:
-    runs-on: ubuntu-22.04-arm  # Use a GitHub-hosted runner
+    runs-on: macos-latest  # Use a GitHub-hosted runner
     steps:
       # Checkout this repository
       - name: Checkout repository
