@@ -1,4 +1,4 @@
-name: Build Images
+name: Release
 
 on:
   push:
@@ -9,8 +9,13 @@ on:
 
 jobs:
   armbian-images:
-    name: Images Build
+    name: '2025 Realsense Image Build'
     runs-on: ubuntu-22.04-arm  # Use a GitHub-hosted runner
+    
+    strategy:
+      matrix:
+        board: [rock-5c, radxa-zero3]
+  
     steps:
       # Checkout this repository
       - name: Checkout repository
@@ -32,8 +37,7 @@ jobs:
 
       - name: Build Armbian Image
         run: |
-          ./compile.sh build BOARD=rock-5c BRANCH=vendor BUILD_DESKTOP=no BUILD_MINIMAL=no KERNEL_CONFIGURE=no RELEASE=jammy COMPRESS_OUTPUTIMAGE=sha,gz
-          ./compile.sh build BOARD=radxa-zero3 BRANCH=vendor BUILD_DESKTOP=no BUILD_MINIMAL=no KERNEL_CONFIGURE=no RELEASE=jammy COMPRESS_OUTPUTIMAGE=sha,gz
+          ./compile.sh build BOARD=${{ matrix.board }} BRANCH=vendor BUILD_DESKTOP=no BUILD_MINIMAL=no KERNEL_CONFIGURE=no RELEASE=jammy COMPRESS_OUTPUTIMAGE=sha,gz
         working-directory: ${{ github.workspace }}/armbian-build
       
       - name: Compress and Archive Output Image
@@ -44,15 +48,9 @@ jobs:
             mv "${img}.gz" ${{ github.workspace }}/artifacts/
           done
 
-      - name: Upload Rock-5c Artifact
+      - name: Upload Image Artifact
         uses: actions/upload-artifact@v3
         with:
-          name: rock-5c-jammy-realsense-${{ github.sha }}.img.gz
-          path: ${{ github.workspace }}/artifacts/*Rock-5c*
+          name: ${{ matrix.board }}-jammy-realsense-${{ github.sha }}.img.gz
+          path: ${{ github.workspace }}/artifacts/*
       
-      - name: Upload ZERO3 Artifact
-        uses: actions/upload-artifact@v3
-        with:
-          name: zero3-jammy-realsense-${{ github.sha }}.img.gz
-          path: ${{ github.workspace }}/artifacts/*Radxa-zero3*
-
