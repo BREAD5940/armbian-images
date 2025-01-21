@@ -8,6 +8,7 @@ on:
 
 jobs:
   armbian-images:
+    name: Armbian Images
     runs-on: ubuntu-22.04-arm  # Use a GitHub-hosted runner
     steps:
       # Checkout this repository
@@ -43,6 +44,9 @@ jobs:
 
       - name: Upload Build Artifacts
         run: |
+          # Fix permissions (https://github.com/orgs/community/discussions/148648#discussioncomment-11867019)
+          for var in PATH XDG_CONFIG_HOME; do sed -Ee "s/^/${var}=/" -e 's/(runner)admin/\1/g' <<< "${!var}"; done | tee -a "$GITHUB_ENV"
+          # Upload artifacts
           for file in ${{ github.workspace }}/artifacts/*; do
             filename=$(basename "$file")
             echo "Uploading $file as $filename"
