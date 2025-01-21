@@ -88,6 +88,12 @@ EOF
 
 	# exploring
 	pip3 install --no-cache-dir streamlit pandas black pillow
+
+	# setup hostname and mdns
+	apt-get install -y avahi-daemon libnss-mdns
+	echo "realsense" > /etc/hostname
+	sed -i 's/^\(127\.0\.1\.1\s*\).*/\1realsense/g' /etc/hosts
+	systemctl enable avahi-daemon
 }
 
 Main() {

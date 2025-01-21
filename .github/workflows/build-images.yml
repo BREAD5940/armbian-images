@@ -3,7 +3,8 @@ name: Build Images
 on:
   push:
     branches:
-      - main  # Trigger on any push to the main branch
+          - main  # Trigger on any push to the main branch
+  pull_request:
   workflow_dispatch:  # Allow manual triggers
 
 jobs:
