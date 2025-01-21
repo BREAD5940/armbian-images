@@ -42,7 +42,9 @@ jobs:
           done
 
       - name: Upload Build Artifacts
-        uses: actions/upload-artifact@v4
-        with:
-          name: armbian-images
-          path:  ${{ github.workspace }}/artifacts
+        run: |
+          for file in ${{ github.workspace }}/artifacts/*; do
+            filename=$(basename "$file")
+            echo "Uploading $file as $filename"
+            gh action upload-artifact --name "$filename" --path "$file"
+          done
