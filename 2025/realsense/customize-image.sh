@@ -46,7 +46,7 @@ EOF
 		liblzma-dev python3-openssl git python3-dev python3-pip python3-venv \
 		libssl-dev libusb-1.0-0-dev libudev-dev pkg-config libgtk-3-dev v4l-utils \
 		git wget cmake libglfw3-dev libgl1-mesa-dev libglu1-mesa-dev at \
-		xorg mesa-utils ffmpeg
+		xorg mesa-utils ffmpeg vim
 
 	cd ~
 	git clone --depth 1 --branch v2.56.3 https://github.com/IntelRealSense/librealsense.git
