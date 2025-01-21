@@ -1,4 +1,4 @@
-name: SBC Image Build
+name: Release
 
 on:
   push:
@@ -9,7 +9,7 @@ on:
 
 jobs:
   armbian-images:
-    name: SBC Image Build
+    name: '2025 Realsense Image Build'
     runs-on: ubuntu-22.04-arm  # Use a GitHub-hosted runner
     
     strategy:
