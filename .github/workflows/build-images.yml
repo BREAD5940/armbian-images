@@ -40,17 +40,9 @@ jobs:
           ./compile.sh build BOARD=${{ matrix.board }} BRANCH=vendor BUILD_DESKTOP=no BUILD_MINIMAL=no KERNEL_CONFIGURE=no RELEASE=jammy COMPRESS_OUTPUTIMAGE=sha,gz
         working-directory: ${{ github.workspace }}/armbian-build
       
-      - name: Compress and Archive Output Image
-        run: |
-          mkdir -p ${{ github.workspace }}/artifacts
-          for img in ${{ github.workspace }}/armbian-build/output/images/*.img; do
-            gzip -c "$img" > "${img}.gz"
-            mv "${img}.gz" ${{ github.workspace }}/artifacts/
-          done
-
       - name: Upload Image Artifact
         uses: actions/upload-artifact@v3
         with:
-          name: ${{ matrix.board }}-jammy-realsense-${{ github.sha }}.img.gz
-          path: ${{ github.workspace }}/artifacts/*
+          name: ${{ matrix.board }}-jammy-realsense-${{ github.sha }}.img
+          path: ${{ github.workspace }}/armbian-build/output/images/*.img
       
