@@ -37,7 +37,7 @@ jobs:
 
       - name: Build Armbian Image
         run: |
-          ./compile.sh build BOARD=${{ matrix.board }} BRANCH=vendor BUILD_DESKTOP=no BUILD_MINIMAL=no KERNEL_CONFIGURE=no RELEASE=jammy
+          ./compile.sh build BOARD=${{ matrix.board }} ENABLE_EXTENSIONS=preset-firstrun BRANCH=vendor BUILD_DESKTOP=no BUILD_MINIMAL=no KERNEL_CONFIGURE=no RELEASE=jammy
         working-directory: ${{ github.workspace }}/armbian-build
       
       - name: Upload Image Artifact
