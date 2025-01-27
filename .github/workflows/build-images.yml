@@ -32,12 +32,12 @@ jobs:
       - name: Copy Userpatches
         run: |
           mkdir -p armbian-build/userpatches
-          cp -r 2025/realsense/customize-image.sh armbian-build/userpatches/
+          cp -r 2025/realsense/* armbian-build/userpatches/
         working-directory: ${{ github.workspace }}
 
       - name: Build Armbian Image
         run: |
-          ./compile.sh build BOARD=${{ matrix.board }} BRANCH=vendor BUILD_DESKTOP=no BUILD_MINIMAL=no KERNEL_CONFIGURE=no RELEASE=jammy COMPRESS_OUTPUTIMAGE=sha,gz
+          ./compile.sh build BOARD=${{ matrix.board }} BRANCH=vendor BUILD_DESKTOP=no BUILD_MINIMAL=no KERNEL_CONFIGURE=no RELEASE=jammy
         working-directory: ${{ github.workspace }}/armbian-build
       
       - name: Upload Image Artifact
