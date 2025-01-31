@@ -18,7 +18,7 @@ function post_family_tweaks__preset_configs() {
 
 	#If you want to use a static ip, set it here
 	echo "PRESET_NET_USE_STATIC=1" >> "${SDCARD}"/root/.not_logged_in_yet
-	echo "PRESET_NET_STATIC_IP='10.59.40.11'" >> "${SDCARD}"/root/.not_logged_in_yet
+	echo "PRESET_NET_STATIC_IP='10.59.40.18'" >> "${SDCARD}"/root/.not_logged_in_yet
 	echo "PRESET_NET_STATIC_MASK='255.255.0.0'" >> "${SDCARD}"/root/.not_logged_in_yet
 	echo "PRESET_NET_STATIC_GATEWAY='10.59.0.1'" >> "${SDCARD}"/root/.not_logged_in_yet
 	echo "PRESET_NET_STATIC_DNS='8.8.8.8 1.1.1.1'" >> "${SDCARD}"/root/.not_logged_in_yet
