@@ -19,11 +19,11 @@ jobs:
     steps:
       # Checkout this repository
       - name: Checkout repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       # Checkout the Armbian build repository
       - name: Checkout Armbian Build Repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         with:
           repository: armbian/build
           ref: main  # Use the main branch of the Armbian repository
@@ -41,7 +41,7 @@ jobs:
         working-directory: ${{ github.workspace }}/armbian-build
       
       - name: Upload Image Artifact
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: ${{ matrix.board }}-jammy-realsense-${{ github.sha }}.img
           path: ${{ github.workspace }}/armbian-build/output/images/*.img
